@@ -3,7 +3,7 @@
 -->
 <template>
   <div
-    v-if="formData.length > 0"
+    v-if="formList.length > 0"
     class="daq-form-item"
     :style="{ width: formWidth }"
   >
@@ -15,7 +15,7 @@
     >
       <el-row v-bind="globalRowAttr">
         <el-col
-          v-for="(item, index) in formData"
+          v-for="(item, index) in formList"
           :key="index"
           :span="item.span || globalSpan"
           v-bind="item.colAttr || null"
@@ -32,7 +32,7 @@
             <template v-else>
               <component
                 :is="item.type || 'el-input'"
-                v-model="item[item.name]"
+                v-model="formData[item.name]"
                 v-bind="setInputAttrHandle(item)"
                 :maxlength="item?.inputAttr?.maxlength || 26"
                 :clearable="item?.inputAttr?.clearable || globalClearable"
@@ -190,13 +190,21 @@ const props = defineProps({
     default: () => [],
     required: true,
   },
+
+  /**
+   * 对数据进行赋值
+   */
+  formData: {
+    type: Object,
+    default: () => ({}),
+  },
 });
 
 // 赋值
-const formData = computed(() => {
-  props.formList.forEach((item) => (item[item.name] = item.value || ''));
-  return props.formList;
-});
+// const formData = computed(() => {
+//   props.formList.forEach((item) => (item[item.name] = item.value || ''));
+//   return props.formList;
+// });
 
 // 全局的 form 表单属性进行整合
 const globalFormAttr = computed(() => {
@@ -211,12 +219,12 @@ const globalFormAttr = computed(() => {
   };
 });
 
-const emit = defineEmits(['update:formList', 'submit-handle']);
+const emit = defineEmits(['submit-handle']);
 
-watchEffect(() => {
-  console.log('formData', formData.value);
-  // emit('update:formList', formData.value);
-});
+// watchEffect(() => {
+//   console.log('formData', formData.value);
+//   // emit('update:formList', formData.value);
+// });
 
 // 设置默认的按钮功能列表 [若使用了按钮自定义插槽，则此属性不生效]
 const operaBtnList = computed(() => {
@@ -265,15 +273,15 @@ function operationHandle(btnType) {
     if (btnType === 'reset') {
       formDataRef.value.resetFields();
       // 在书写自定义事件时，当前的名称与使用时的名称保持一致。
-      emit('submit-handle', btnType, formData.value);
-      resolve(formData);
+      emit('submit-handle', btnType, props.formData);
+      resolve(props.formData);
     } else {
-      console.log('formData', props.formList);
+      console.log('formData', props.formData);
       formDataRef.value.validate((valid) => {
         if (valid) {
           // 自定义函数的两个参数，第一个为查询的数据，第二为按钮的 type 类型
-          emit('submit-handle', btnType, formData.value);
-          resolve(formData);
+          emit('submit-handle', btnType, props.formData);
+          resolve(props.formData);
         } else {
           console.error('验证失败');
           // reject('验证失败');

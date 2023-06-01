@@ -7,7 +7,6 @@ const formList = reactive([
     label: '申请人',
     name: 'applyPeople',
     type: 'el-select',
-    value: '1',
     options: [
       {
         label: '张大卷',
@@ -28,6 +27,11 @@ const formList = reactive([
   },
 ]);
 
+const formData = reactive({
+  applyPeople: '1',
+  changeType: '',
+});
+
 // 验证规则
 const rules = reactive({
   applyPeople: [{ required: true, message: '申请人不能为空', trigger: 'blur' }],
@@ -45,6 +49,7 @@ function onHandle(type, data) {
 <template>
   <Index
     :form-list="formList"
+    :form-data="formData"
     :form-attr="{
       labelWidth: '160px',
       rules,
