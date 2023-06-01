@@ -7,7 +7,7 @@ const formList = reactive([
     label: '申请人',
     name: 'applyPeople',
     type: 'el-select',
-    // value: '1',
+    value: '1',
     options: [
       {
         label: '张大卷',
@@ -39,7 +39,7 @@ const rules = reactive({
 // 表单组件的实例
 const formListRef = ref(null);
 
-function handle(type, data) {
+function onHandle(type, data) {
   console.log('type', type);
   console.log('data', data);
 }
@@ -57,7 +57,7 @@ function handle(type, data) {
     :global-row-attr="{
       class: 'daq-fl daq-fl-column',
     }"
-    @submit-handle="handle"
+    @submit-handle="onHandle"
   >
     <template #changeRoomNum>
       <div class="choice-input-wrap" @click="dialogVisibleShow = true">

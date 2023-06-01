@@ -194,7 +194,8 @@ const props = defineProps({
 
 // 赋值
 const formData = computed(() => {
-  props.formList.forEach((item) => (item[item.name] = item[item.value] || ''));
+  props.formList.forEach((item) => (item[item.name] = item.value || ''));
+  console.log('props.formList', props.formList);
   return props.formList;
 });
 
@@ -276,7 +277,7 @@ function operationHandle(btnType) {
           // 自定义函数的两个参数，第一个为查询的数据，第二为按钮的 type 类型
           emit('submit-handle', btnType, formData.value);
 
-          resolve();
+          resolve(formData);
         } else {
           // console.error('验证失败');
           reject('验证失败');
