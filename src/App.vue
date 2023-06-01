@@ -36,9 +36,6 @@ const rules = reactive({
   ],
 });
 
-// 表单组件的实例
-const formListRef = ref(null);
-
 function onHandle(type, data) {
   console.log('type', type);
   console.log('data', data);
@@ -46,8 +43,7 @@ function onHandle(type, data) {
 </script>
 
 <template>
-  <index
-    ref="formListRef"
+  <Index
     :form-list="formList"
     :form-attr="{
       labelWidth: '160px',
@@ -59,18 +55,7 @@ function onHandle(type, data) {
     }"
     @submit-handle="onHandle"
   >
-    <template #changeRoomNum>
-      <div class="choice-input-wrap" @click="dialogVisibleShow = true">
-        <el-input
-          v-model="roomData.changeRoomName"
-          class="choice-input"
-          :disabled="true"
-          placeholder="点击请选择"
-        >
-        </el-input>
-      </div>
-    </template>
-  </index>
+  </Index>
 </template>
 
 <style scoped>

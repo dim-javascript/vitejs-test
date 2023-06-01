@@ -195,7 +195,6 @@ const props = defineProps({
 // 赋值
 const formData = computed(() => {
   props.formList.forEach((item) => (item[item.name] = item.value || ''));
-  console.log('props.formList', props.formList);
   return props.formList;
 });
 
@@ -261,14 +260,12 @@ const formDataRef = ref(null);
  */
 // eslint-disable-next-line no-empty-function
 function operationHandle(btnType) {
-  // console.log('btnType', btnType);
+  console.log('btnType', btnType);
   return new Promise((resolve, reject) => {
     if (btnType === 'reset') {
       formDataRef.value.resetFields();
-
       // 在书写自定义事件时，当前的名称与使用时的名称保持一致。
       emit('submit-handle', btnType, formData.value);
-
       resolve(formData);
     } else {
       console.log('formData', props.formList);
@@ -276,7 +273,6 @@ function operationHandle(btnType) {
         if (valid) {
           // 自定义函数的两个参数，第一个为查询的数据，第二为按钮的 type 类型
           emit('submit-handle', btnType, formData.value);
-
           resolve(formData);
         } else {
           // console.error('验证失败');
