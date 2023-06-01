@@ -193,19 +193,11 @@ const props = defineProps({
   },
 });
 
+// 赋值
 const formData = computed(() => {
-  props.formList.forEach((item) => (item[item.name] = item[item.name] || ''));
+  props.formList.forEach((item) => (item[item.name] = item[item.value] || ''));
   return props.formList;
 });
-
-// 动态的赋默认值
-// watchEffect(() => {
-//   if (props.formList.length > 0) {
-//     props.formList.forEach(item => {
-//       item.defaultVal !== undefined && (formData[item.name] = item.defaultVal || '');
-//     });
-//   }
-// });
 
 // 全局的 form 表单属性进行整合
 const globalFormAttr = computed(() => {
@@ -275,7 +267,7 @@ function operationHandle(btnType) {
       formDataRef.value.resetFields();
 
       // 在书写自定义事件时，当前的名称与使用时的名称保持一致。
-      emit('submit-handle', btnType);
+      emit('submit-handle', btnType, formData.value);
 
       resolve(formData);
     } else {
@@ -283,7 +275,7 @@ function operationHandle(btnType) {
       formDataRef.value.validate((valid) => {
         if (valid) {
           // 自定义函数的两个参数，第一个为查询的数据，第二为按钮的 type 类型
-          emit('submit-handle', btnType);
+          emit('submit-handle', btnType, formData.value);
 
           resolve();
         } else {
