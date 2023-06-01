@@ -275,8 +275,8 @@ function operationHandle(btnType) {
           emit('submit-handle', btnType, formData.value);
           resolve(formData);
         } else {
-          // console.error('验证失败');
-          reject('验证失败');
+          console.error('验证失败');
+          // reject('验证失败');
         }
       });
     }
