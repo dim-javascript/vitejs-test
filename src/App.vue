@@ -53,8 +53,7 @@ function handle(type, data) {
       labelWidth: '160px',
       rules,
     }"
-    :show-default-btn="false"
-    :global-span="6"
+    :global-span="24"
     :global-row-attr="{
       class: 'daq-fl daq-fl-column',
     }"
