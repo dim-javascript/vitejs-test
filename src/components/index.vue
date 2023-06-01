@@ -1,5 +1,4 @@
 <!--
- * @Author: 政务业务部-杜敏 dumin@daqsoft.com
  * @Description: 适用于表单搜索以及提交组件，若当前组件的某一个不能满足某一个组件时，请使用插槽的形式。
 -->
 <template>
